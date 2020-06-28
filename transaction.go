@@ -17,8 +17,8 @@ type Transaction struct {
 	RunningBalance *TransactionBalance    `json:"running_balance"`
 }
 
-// GetAccountTransactions ...
-func (client *Client) GetAccountTransactions(accountID string) ([]*Transaction, error) {
+// GetTransactions ...
+func (client *Client) GetTransactions(accountID string) ([]*Transaction, error) {
 
 	truelayerURL := client.baseURL + "data/v1/accounts/" + accountID + "/transactions"
 
@@ -34,8 +34,8 @@ func (client *Client) GetAccountTransactions(accountID string) ([]*Transaction, 
 	return transactions.Results, nil
 }
 
-// GetPendingAccountTransactions ...
-func (client *Client) GetPendingAccountTransactions(accountID string) ([]*Transaction, error) {
+// GetPendingTransactions ...
+func (client *Client) GetPendingTransactions(accountID string) ([]*Transaction, error) {
 
 	truelayerURL := client.baseURL + "data/v1/accounts/" + accountID + "/transactions/pending"
 

@@ -72,3 +72,20 @@ func (client *Client) GetAccountBalance(accountID string) (*AccountBalance, erro
 
 	return balance.Results[0], nil
 }
+
+// GetAccountDirectDebits ...
+func (client *Client) GetAccountDirectDebits(accountID string) ([]*DirectDebit, error) {
+
+	truelayerURL := client.baseURL + "data/v1/accounts/" + accountID + "/direct_debits"
+
+	var directDebits struct {
+		Results []*DirectDebit `json:"results"`
+	}
+
+	err := client.get(truelayerURL, &directDebits)
+	if err != nil {
+		return nil, err
+	}
+
+	return directDebits.Results, nil
+}

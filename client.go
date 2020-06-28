@@ -28,13 +28,14 @@ type Client struct {
 
 // Error ...
 type Error struct {
-	Message string `json:"message"`
-	Status  int    `json:"status"`
+	Type        string `json:"error"`
+	Description string `json:"error_description"`
+	Status      int    `json:"status"`
 }
 
 // Error ...
 func (e Error) Error() string {
-	return e.Message
+	return e.Type
 }
 
 func retryDuration(resp *http.Response) time.Duration {
@@ -100,8 +101,8 @@ func (c *Client) decodeError(resp *http.Response) error {
 		return fmt.Errorf("truelayer: couldn't decode error: (%d) [%s]", len(responseBody), responseBody)
 	}
 
-	if e.E.Message == "" {
-		e.E.Message = fmt.Sprintf("truelayer: unexpected HTTP %d: %s (empty error)",
+	if e.E.Type == "" {
+		e.E.Type = fmt.Sprintf("truelayer: unexpected HTTP %d: %s (empty error)",
 			resp.StatusCode, http.StatusText(resp.StatusCode))
 	}
 

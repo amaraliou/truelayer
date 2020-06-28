@@ -17,10 +17,9 @@ type Transaction struct {
 	RunningBalance *TransactionBalance    `json:"running_balance"`
 }
 
-// GetTransactions ...
-func (client *Client) GetTransactions(accountID string) ([]*Transaction, error) {
+func (client *Client) getTransactions(productType, accountID string) ([]*Transaction, error) {
 
-	truelayerURL := client.baseURL + "data/v1/accounts/" + accountID + "/transactions"
+	truelayerURL := client.baseURL + "data/v1/" + productType + "/" + accountID + "/transactions"
 
 	var transactions struct {
 		Results []*Transaction `json:"results"`
@@ -34,10 +33,9 @@ func (client *Client) GetTransactions(accountID string) ([]*Transaction, error) 
 	return transactions.Results, nil
 }
 
-// GetPendingTransactions ...
-func (client *Client) GetPendingTransactions(accountID string) ([]*Transaction, error) {
+func (client *Client) getPendingTransactions(productType, accountID string) ([]*Transaction, error) {
 
-	truelayerURL := client.baseURL + "data/v1/accounts/" + accountID + "/transactions/pending"
+	truelayerURL := client.baseURL + "data/v1/" + productType + "/" + accountID + "/transactions/pending"
 
 	var pendingTransactions struct {
 		Results []*Transaction `json:"results"`
@@ -49,4 +47,24 @@ func (client *Client) GetPendingTransactions(accountID string) ([]*Transaction, 
 	}
 
 	return pendingTransactions.Results, nil
+}
+
+// GetAccountTransactions ...
+func (client *Client) GetAccountTransactions(accountID string, pending bool) ([]*Transaction, error) {
+
+	if pending {
+		return client.getPendingTransactions("accounts", accountID)
+	}
+
+	return client.getTransactions("accounts", accountID)
+}
+
+// GetCardTransactions ...
+func (client *Client) GetCardTransactions(accountID string, pending bool) ([]*Transaction, error) {
+
+	if pending {
+		return client.getPendingTransactions("cards", accountID)
+	}
+
+	return client.getTransactions("cards", accountID)
 }

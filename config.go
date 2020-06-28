@@ -5,7 +5,7 @@ const (
 	AuthBaseURL = "https://auth.truelayer.com"
 
 	// APIBaseURL ...
-	APIBaseURL = "https://api.truelayer.com"
+	APIBaseURL = "https://api.truelayer.com/"
 
 	// StatusBaseURL ...
 	StatusBaseURL = "https://status-api.truelayer.com"

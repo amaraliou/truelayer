@@ -22,13 +22,6 @@ type Number struct {
 	SwiftBic string `json:"swift_bic"`
 }
 
-// Provider ...
-type Provider struct {
-	ID          string `json:"provider_id"`
-	DisplayName string `json:"display_name"`
-	LogoURI     string `json:"logo_uri"`
-}
-
 // GetAccounts ...
 func (client *Client) GetAccounts() ([]*Account, error) {
 
@@ -44,4 +37,38 @@ func (client *Client) GetAccounts() ([]*Account, error) {
 	}
 
 	return accounts.Results, nil
+}
+
+// GetAccount ...
+func (client *Client) GetAccount(accountID string) (*Account, error) {
+
+	truelayerURL := client.baseURL + "data/v1/accounts/" + accountID
+
+	var account struct {
+		Results []*Account `json:"results"`
+	}
+
+	err := client.get(truelayerURL, &account)
+	if err != nil {
+		return nil, err
+	}
+
+	return account.Results[0], nil
+}
+
+// GetAccountBalance ...
+func (client *Client) GetAccountBalance(accountID string) (*AccountBalance, error) {
+
+	truelayerURL := client.baseURL + "data/v1/accounts/" + accountID + "/balance"
+
+	var balance struct {
+		Results []*AccountBalance `json:"results"`
+	}
+
+	err := client.get(truelayerURL, &balance)
+	if err != nil {
+		return nil, err
+	}
+
+	return balance.Results[0], nil
 }

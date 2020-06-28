@@ -33,3 +33,20 @@ func (client *Client) GetCards() ([]*Card, error) {
 
 	return cards.Results, nil
 }
+
+// GetCard ...
+func (client *Client) GetCard(accountID string) (*Card, error) {
+
+	truelayerURL := client.baseURL + "data/v1/cards/" + accountID
+
+	var card struct {
+		Results []*Card `json:"results"`
+	}
+
+	err := client.get(truelayerURL, &card)
+	if err != nil {
+		return nil, err
+	}
+
+	return card.Results[0], nil
+}

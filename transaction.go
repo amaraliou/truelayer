@@ -9,9 +9,9 @@ type Transaction struct {
 	Description    string                 `json:"description"`
 	Type           string                 `json:"transaction_type"`
 	Category       string                 `json:"transaction_category"`
-	Classification []string               `json:"classification"`
+	Classification []string               `json:"transaction_classification"`
 	Merchant       string                 `json:"merchant_name"`
-	Amount         float32                `json:"amount"`
+	Amount         float64                `json:"amount"`
 	Currency       string                 `json:"currency"`
 	Metadata       map[string]interface{} `json:"meta"`
 	RunningBalance *TransactionBalance    `json:"running_balance"`

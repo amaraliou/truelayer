@@ -10,6 +10,4 @@ func (transaction *Transaction) ExtractMerchantFromDescription() {
 		merchant := strings.Split(description, " -")[0]
 		transaction.Merchant = merchant
 	}
-
-	return
 }
